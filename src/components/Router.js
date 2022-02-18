@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route} from "react-router-dom";
 import Login from "../routes/Login";
 import Home from "../routes/Home";
 
-const AppRouter = () => {
+const AppRouter = ({isLoggedIn}) => {
     return(  
         <BrowserRouter> 
             <Routes>
