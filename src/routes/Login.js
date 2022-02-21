@@ -19,10 +19,10 @@ function Login () {
     const onChange = (event) => {
         const { target: {value}} = event;
         setPassword(value);
-    }
-
-    const onSubmit = (event) => {
-        event.preventDefault();
+        console.log(password);
+        if(password === "kkk") {
+            console.log("true!!!!!!!!!!!!!");
+        }
     }
 
     return (
@@ -36,7 +36,6 @@ function Login () {
                 </img>
             </div>
             <div className="d2">
-                <form onSubmit={onSubmit}>
                     <input 
                     className="Logininput"
                     type="text"
@@ -46,12 +45,6 @@ function Login () {
                     required
                     >
                     </input>
-                    <input
-                    className="Loginbutton"
-                    type="submit"
-                    value="😊"
-                    />
-                </form>
             </div>
         </div>
         </>

@@ -19,8 +19,9 @@
 }
 
 .Loginimg {
-  width: 50vw;
-  height: 50vh;
+  margin-top: 10%;
+  width: 20%;
+  height: 90%;
 }
 
 .d2 {
@@ -30,4 +31,16 @@
   width: 100%;
   height: 33vh;
   margin-top: 5px;
+}
+
+.Logininput {
+  background-color: transparent;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-bottom-width: 8px;
+  border-bottom-style: ridge;
+  border-bottom-color: #ff3390;
+  width: 200px;
+  height: 50px;
 }
