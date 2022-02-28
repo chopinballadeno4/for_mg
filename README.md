@@ -2,8 +2,8 @@
 
 ### javascript
 
-### scss
+### scss -> css
 
 ### firebase
 
-### redux
+### redux -> recoil

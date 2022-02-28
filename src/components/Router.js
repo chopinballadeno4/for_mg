@@ -8,7 +8,7 @@ const AppRouter = ({isLoggedIn}) => {
         <BrowserRouter> 
             <Routes>
                 <Route exact path="/" element={<Login/>} />
-                <Route exact path="/123" element={<Home/>} />
+                <Route exact path="/:id" element={<Home/>} />
             </Routes>
         </BrowserRouter>
     );

@@ -44,3 +44,9 @@
   width: 200px;
   height: 50px;
 }
+
+.Loginsubmit {
+  background-color: transparent;
+  border: none;
+  font-size: 25px;
+}
