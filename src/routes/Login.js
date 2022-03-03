@@ -74,6 +74,7 @@ function Login () {
                         autoFocus
                         required
                         ></input>
+                        {iswrongPW ? (
                         <Shake 
                         className="Loginspan"
                         h={10}
@@ -88,6 +89,9 @@ function Login () {
                         >
                             <span>wrong password !!!</span>
                         </Shake>
+                        ) : (
+                            null
+                        )}
                     </div>
                     <input 
                     className="Loginsubmit"
