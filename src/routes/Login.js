@@ -3,10 +3,12 @@ import { useState } from "react";
 import {authService, storageService, dbService} from "../fbase";
 import "../css/Logincss.css";
 import { useNavigate } from "react-router-dom";
+import { Shake } from 'reshake';
 
 function Login () {
     const [password, setPassword] = useState();
     const [loginimg, setLoginimg] = useState();
+    const [iswrongPW, setiswrongPW] = useState(false);
     const Navigate = useNavigate();
 
     const uploadimg = async () => {
@@ -14,9 +16,9 @@ function Login () {
         setLoginimg(await attachmentRef.getDownloadURL());
     }
 
-    const moveHome = () => {
-        Navigate("/123");
-    }
+    const moveHome = (userID) => {
+        Navigate(`/${userID}`);
+   }
 
     const onChange = (event) => {
         const { target: {value}} = event;
@@ -24,7 +26,7 @@ function Login () {
     }
 
     const onSubmit = async (event) => {
-        //event.preventDefault();
+        event.preventDefault();
         const users = await dbService.collection("user").get();
         let userID;
         let islogin;
@@ -35,12 +37,10 @@ function Login () {
                 islogin = true;
             }
         });
-        console.log(userID);
-        console.log(islogin);
         if(islogin) {
-            moveHome();
+            moveHome(userID);
         } else {
-            console.log("wrong user");
+            setiswrongPW(true);
         }
     };
 
@@ -59,16 +59,36 @@ function Login () {
                 </img>
             </div>
             <div className="d2">
-                <form onSubmit={onSubmit}>
-                    <input 
-                    className="Logininput"
-                    type="text"
-                    placeholder="비밀번호를 입력해 주세요."
-                    value={password}
-                    onChange={onChange}
-                    required
+                <form onSubmit={onSubmit}
+                className="d2form"
+                >
+                    <div
+                    className="Loginmsg"
                     >
-                    </input>
+                        <input 
+                        className="Logininput"
+                        type="password"
+                        placeholder="비밀번호를 입력해 주세요."
+                        value={password}
+                        onChange={onChange}
+                        autoFocus
+                        required
+                        ></input>
+                        <Shake 
+                        className="Loginspan"
+                        h={10}
+                        v={0}
+                        r={4}
+                        dur={1000}
+                        int={10}
+                        max={100}
+                        fixed={true}
+                        fixedStop={false}
+                        freez={false}
+                        >
+                            <span>wrong password !!!</span>
+                        </Shake>
+                    </div>
                     <input 
                     className="Loginsubmit"
                     type="submit" 

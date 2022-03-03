@@ -33,6 +33,10 @@
   margin-top: 5px;
 }
 
+.d2form {
+  display: flex;
+}
+
 .Logininput {
   background-color: transparent;
   border-top: none;
@@ -49,4 +53,16 @@
   background-color: transparent;
   border: none;
   font-size: 25px;
+  margin-bottom: 30px;
+}
+
+.Loginmsg {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.Loginspan {
+  color: red;
+  align-self: center;
 }
