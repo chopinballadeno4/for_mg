@@ -1,0 +1,26 @@
+@import "https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css";
+
+* {
+  box-sizing: border-box;
+}
+
+.TD {
+  background-color: pink;
+  width: 100vw;
+  height: 100vh;
+}
+
+.Tap_button {
+  background-color: transparent;
+  /* border: 0; */
+  margin-left: 10px;
+  width: 55px;
+  height: 55px;
+  border: 0;
+}
+
+.Tap_button > img {
+  width: 45px;
+  height: 45px;
+  margin: auto;
+}

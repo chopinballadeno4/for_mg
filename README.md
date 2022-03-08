@@ -1,9 +1,15 @@
-## React
+## 🎈 React
 
 ### javascript
 
 ### scss -> css
 
-### firebase
+#
+
+### DB - firebase
+
+#
 
 ### redux -> recoil
+
+### reshake
