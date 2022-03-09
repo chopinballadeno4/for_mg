@@ -1,7 +1,7 @@
+import "../css/Logincss.css";
 import React, { useEffect } from "react";
 import { useState } from "react";
 import {authService, storageService, dbService} from "../fbase";
-import "../css/Logincss.css";
 import { useNavigate } from "react-router-dom";
 import { Shake } from 'reshake';
 
@@ -49,24 +49,19 @@ function Login () {
     },[]);
 
     return (
-        <>
-        <div className="TD">
-            <div className="d1">
+        <div className="login">
+            <div className="login-img">
                 <img 
-                className="Loginimg"
                 src={loginimg}
                 >
                 </img>
             </div>
-            <div className="d2">
-                <form onSubmit={onSubmit}
-                className="d2form"
+            <div className="login-form">
+                <form 
+                onSubmit={onSubmit}
                 >
-                    <div
-                    className="Loginmsg"
-                    >
+                    <div className="login-form-msg">
                         <input 
-                        className="Logininput"
                         type="password"
                         placeholder="비밀번호를 입력해 주세요."
                         value={password}
@@ -76,7 +71,7 @@ function Login () {
                         ></input>
                         {iswrongPW ? (
                         <Shake 
-                        className="Loginspan"
+                        className="Login-form-msg-error"
                         h={10}
                         v={0}
                         r={4}
@@ -94,7 +89,7 @@ function Login () {
                         )}
                     </div>
                     <input 
-                    className="Loginsubmit"
+                    className="login-form-submit"
                     type="submit" 
                     value="💗"
                     >
@@ -102,7 +97,6 @@ function Login () {
                 </form>
             </div>
         </div>
-        </>
     );
 }
 

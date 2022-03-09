@@ -4,13 +4,13 @@
   box-sizing: border-box;
 }
 
-.TD {
+.login {
   background-color: pink;
   height: 100vh;
   width: 100vw;
 }
 
-.d1 {
+.login-img {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -18,13 +18,13 @@
   height: 66vh;
 }
 
-.Loginimg {
+.login-img > img {
   margin-top: 10%;
   width: 20%;
   height: 90%;
 }
-
-.d2 {
+/* ---------------------------- */
+.login-form {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -33,11 +33,17 @@
   margin-top: 5px;
 }
 
-.d2form {
+.login-form > form {
   display: flex;
 }
 
-.Logininput {
+.login-form-msg {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.login-form-msg > input {
   background-color: transparent;
   border-top: none;
   border-left: none;
@@ -49,20 +55,14 @@
   height: 50px;
 }
 
-.Loginsubmit {
+.login-form-submit {
   background-color: transparent;
   border: none;
   font-size: 25px;
   margin-bottom: 30px;
 }
 
-.Loginmsg {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.Loginspan {
+.Login-form-msg-error {
   color: red;
   align-self: center;
 }
