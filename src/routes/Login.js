@@ -4,25 +4,33 @@ import { useState } from "react";
 import {authService, storageService, dbService} from "../fbase";
 import { useNavigate } from "react-router-dom";
 import { Shake } from 'reshake';
+import { username } from "../atoms";
+import { useRecoilState, useRecoilValue } from "recoil";
 
 function Login () {
     const [password, setPassword] = useState();
     const [loginimg, setLoginimg] = useState();
     const [iswrongPW, setiswrongPW] = useState(false);
+    const [user, setUser] = useRecoilState(username);
     const Navigate = useNavigate();
+
+    useEffect(() => {
+        uploadimg();
+    },[]);
 
     const uploadimg = async () => {
         const attachmentRef = storageService.ref().child(`minji2.png`);
         setLoginimg(await attachmentRef.getDownloadURL());
     }
 
-    const moveHome = (userID) => {
+    const moveHome = async (userID) => {
+        setUser(userID);
         Navigate(`/${userID}`);
    }
 
     const onChange = (event) => {
         const { target: {value}} = event;
-        setPassword(value);   
+        setPassword(value);  
     }
 
     const onSubmit = async (event) => {
@@ -43,11 +51,7 @@ function Login () {
             setiswrongPW(true);
         }
     };
-
-    useEffect(() => {
-        uploadimg();
-    },[]);
-
+    
     return (
         <div className="login">
             <div className="login-img">
@@ -64,7 +68,7 @@ function Login () {
                         <input 
                         type="password"
                         placeholder="비밀번호를 입력해 주세요."
-                        value={password}
+                        value={password || ''}
                         onChange={onChange}
                         autoFocus
                         required
@@ -92,6 +96,9 @@ function Login () {
                     className="login-form-submit"
                     type="submit" 
                     value="💗"
+                    style={{
+                        cursor: "pointer",
+                    }}
                     >
                     </input>
                 </form>

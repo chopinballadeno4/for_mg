@@ -1,8 +1,12 @@
 import React from "react";
 import { Link, useParams} from "react-router-dom";
+import { useRecoilState } from "recoil";
+import { username } from "../atoms";
 
 function Home () {
     const { userId } = useParams();
+    const [ user, setUser] = useRecoilState(username);
+    console.log(user + "!!!");
 
     return (
         <div>
