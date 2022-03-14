@@ -6,7 +6,6 @@ import { username } from "../atoms";
 function Home () {
     const { userId } = useParams();
     const [ user, setUser] = useRecoilState(username);
-    console.log(user + "!!!");
 
     return (
         <div>

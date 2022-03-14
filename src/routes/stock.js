@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
 import Chart from "../components/Chart";
+import { username } from "../atoms";
+import { useRecoilState, useRecoilValue } from "recoil";
+import Consume from "../components/Consume";
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import "../css/Stockcss.css";
 
@@ -10,7 +13,8 @@ function Stock() {
     const navigate = useNavigate();
     moment.locale('ko');
     const localizer = momentLocalizer(moment);
-    
+    //const [ user, setUser ] = useRecoilState(username);
+
     const onClick = () => {
         navigate(-1);
     }
@@ -41,9 +45,12 @@ function Stock() {
                 </div>
             </div> 
             <div className="stock-bottom">
-                <span>이번달 사용한 금액: 000000 💰</span>
-                <span>이번달 남은   금액: 000000 💰</span>
-                <span>이번달 남은   일수: 000000 💰</span>
+                <Consume />
+                <span>&nbsp;&nbsp;&nbsp;이번달 사용한 금액: 000000 💸</span>
+                <br/>
+                <span>&nbsp;&nbsp;&nbsp;이번달 남은&nbsp;&nbsp;&nbsp; 금액: 000000 💰</span>
+                <br/>
+                <span>&nbsp;&nbsp;&nbsp;이번달 남은&nbsp;&nbsp;&nbsp; 일수: 000000 📆</span>
             </div>
         </div>
     );
