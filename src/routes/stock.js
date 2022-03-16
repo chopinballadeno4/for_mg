@@ -13,11 +13,14 @@ function Stock() {
     const navigate = useNavigate();
     moment.locale('ko');
     const localizer = momentLocalizer(moment);
-    //const [ user, setUser ] = useRecoilState(username);
+    const user = useRecoilValue(username);
 
     const onClick = () => {
         navigate(-1);
     }
+
+    // useEffect( () => { 
+    // },[]);
 
     return(
         <div className="stock">
@@ -45,7 +48,7 @@ function Stock() {
                 </div>
             </div> 
             <div className="stock-bottom">
-                <Consume />
+                { user==="ming" ? <Consume /> : null}
                 <span>&nbsp;&nbsp;&nbsp;이번달 사용한 금액: 000000 💸</span>
                 <br/>
                 <span>&nbsp;&nbsp;&nbsp;이번달 남은&nbsp;&nbsp;&nbsp; 금액: 000000 💰</span>
