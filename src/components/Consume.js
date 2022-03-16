@@ -3,6 +3,7 @@ import { username } from "../atoms";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { dbService } from "../fbase";
 import moment from "moment";
+import { traverseTwoPhase } from "react-dom/cjs/react-dom-test-utils.production.min";
 
 function Consume () {
     const [ user, setUser ] = useRecoilState(username);
@@ -12,13 +13,14 @@ function Consume () {
     const [ day, setDay ] = useState(moment().format('D'));
     const [ item, setItem ] = useState("");
     const [ value , setValue ] = useState(0);
+    const [ totalvalue, setTotalvalue ] = useState(0);
 
-    useEffect(() => {
-        setFbmonth(checkmonth(moment().format('M')));
+    useEffect(async () => {
+        await setFbmonth(checkmonth(moment().format('M')));
     },[]);
 
     const checkmonth = (month) => {
-        switch(month) {
+        switch(Number(month)) {
             case 1: return "January";
             case 2: return "February";
             case 3: return "March";
@@ -36,19 +38,25 @@ function Consume () {
 
     const onSubmit = async (event) => {
         event.preventDefault();
-        //await dbService.collection()
+        await dbService.collection(fbmonth).add({
+            day: day,
+            items: todayuse,
+            totalvalue: totalvalue,
+        });
+        alert("등록완료 !");
 
     }
 
-    const addItem = () => {
+    const addItem = async () => {
         if(item==="" || value==="") {
             return;
         }
         todayuse.push({
             item: item,
             value: value,
-        })
-        console.log(todayuse);
+        });
+        setTotalvalue(Number(totalvalue)+Number(value));
+        alert("추가완료 !");
     }
 
     const itemChange = (event) => {
