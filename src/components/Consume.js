@@ -4,24 +4,27 @@ import { username } from "../atoms";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { dbService } from "../fbase";
 import moment from "moment";
-import { traverseTwoPhase } from "react-dom/cjs/react-dom-test-utils.production.min";
 
 function Consume () {
-    const [ user, setUser ] = useRecoilState(username);
-    const [ todayuse, setTodayuse ] = useState([]);
-    const [ monthday, setMonthday ] = useState(0);
-    const [ fbmonth, setFbmonth ] = useState("");
-    const [ day, setDay ] = useState(moment().format('D'));
-    const [ item, setItem ] = useState("");
-    const [ value , setValue ] = useState(0);
-    const [ totalvalue, setTotalvalue ] = useState(0);
-    const [ balance, setBalance ] = useState(0);
+    const user = useRecoilValue(username);
+    const [ todayuselist, setTodayuselist ] = useState([]); // 구매 리스트
+    const [ monthday, setMonthday ] = useState(0); // 그달이 몇일까지 있는지
+    const [ fbmonth, setFbmonth ] = useState(""); // March, April 등..
+    const [ day, setDay ] = useState(moment().format('D')); // 오늘 몇일인지
+    const [ balance, setBalance ] = useState(0); // 통장 잔고
+    const [ todayuse, setTodayuse ] = useState(0); // 하루 사용금액
+    const [ monthuse, setMonthuse ] = useState(0); // 한달 사용금액
+    const [ item, setItem ] = useState(""); // 구매 이름
+    const [ value , setValue ] = useState(0); // 구매 가격
 
-    useEffect(async () => {
+
+    useEffect(async () => {    
         await setFbmonth(checkmonth(moment().format('M')));
         await setMonthday(checkday(moment().format('M')));
-        setBalance(await (await dbService.collection("balance").doc("balance").get()).data().money);
+        await setDay(moment().format('D'));
         // this is promise??
+        setBalance(await (await dbService.collection("balance").doc("balance").get()).data().money);
+        setMonthuse(await (await dbService.collection(fbmonth).doc("Totaluse").get()).data().money);
     },[]);
 
     const checkmonth = (month) => {
@@ -62,22 +65,28 @@ function Consume () {
         event.preventDefault();
         await dbService.collection(fbmonth).add({
             day: day,
-            items: todayuse,
-            totalvalue: totalvalue,
+            items: todayuselist,
+            todayuse: todayuse,
+        });
+        await dbService.collection(fbmonth).doc("Totaluse").update({
+            money: monthuse+todayuse,
+        });
+        await dbService.collection("balance").doc("balance").update({
+            money: balance-todayuse,
         });
         alert("등록완료 !");
-
     }
 
     const addItem = async () => {
         if(item==="" || value==="") {
             return;
         }
-        todayuse.push({
+        // 해결과제 - push 말고 useState 사용해서 .. !
+        todayuselist.push({
             item: item,
             value: value,
         });
-        setTotalvalue(Number(totalvalue)+Number(value));
+        setTodayuse(Number(todayuse)+Number(value));
         alert("추가완료 !");
     }
 
@@ -152,7 +161,7 @@ function Consume () {
             </form>
             </>
              : null}
-            <span>&nbsp;&nbsp;&nbsp;이번달 사용한 금액: 000000 💸</span>
+            <span>&nbsp;&nbsp;&nbsp;이번달 사용한 금액: {monthuse.toLocaleString('ko-KR')} 💸</span>
             <br/>
             <span>&nbsp;&nbsp;&nbsp;이번달 남은&nbsp;&nbsp;&nbsp; 금액: {balance.toLocaleString('ko-KR')} 💰</span>
             <br/>

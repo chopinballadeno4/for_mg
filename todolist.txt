@@ -1,0 +1,6 @@
+📢 stock.js
+1. stock calendar에 표시
+2. stock chart 표시
+-problem
+1. stock todayuse 필드 마운트 문제
+2. 다시 컴포넌트 마운트시 user useEffect로 관리 
