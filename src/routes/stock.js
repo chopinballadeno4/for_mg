@@ -48,12 +48,7 @@ function Stock() {
                 </div>
             </div> 
             <div className="stock-bottom">
-                { user==="ming" ? <Consume /> : null}
-                <span>&nbsp;&nbsp;&nbsp;이번달 사용한 금액: 000000 💸</span>
-                <br/>
-                <span>&nbsp;&nbsp;&nbsp;이번달 남은&nbsp;&nbsp;&nbsp; 금액: 000000 💰</span>
-                <br/>
-                <span>&nbsp;&nbsp;&nbsp;이번달 남은&nbsp;&nbsp;&nbsp; 일수: 000000 📆</span>
+                <Consume />
             </div>
         </div>
     );
