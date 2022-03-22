@@ -1,6 +1,6 @@
 import "../css/Stockcss.css";
 import React, { useEffect, useState } from "react";
-import { username } from "../atoms";
+import { username, uselist } from "../atoms";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { dbService } from "../fbase";
 import moment from "moment";
@@ -8,23 +8,22 @@ import moment from "moment";
 function Consume () {
     const user = useRecoilValue(username);
     const [ todayuselist, setTodayuselist ] = useState([]); // 구매 리스트
-    const [ monthday, setMonthday ] = useState(0); // 그달이 몇일까지 있는지
-    const [ fbmonth, setFbmonth ] = useState(""); // March, April 등..
     const [ day, setDay ] = useState(moment().format('D')); // 오늘 몇일인지
     const [ balance, setBalance ] = useState(0); // 통장 잔고
     const [ todayuse, setTodayuse ] = useState(0); // 하루 사용금액
     const [ monthuse, setMonthuse ] = useState(0); // 한달 사용금액
     const [ item, setItem ] = useState(""); // 구매 이름
     const [ value , setValue ] = useState(0); // 구매 가격
+    const [ monthday, setMonthday ] = useState(0); // 그달이 몇일까지 있는지
+    const [ fbmonth, setFbmonth ] = useState(""); // March, April 등..
 
-
-    useEffect(async () => {    
-        await setFbmonth(checkmonth(moment().format('M')));
-        await setMonthday(checkday(moment().format('M')));
-        await setDay(moment().format('D'));
-        // this is promise??
-        setBalance(await (await dbService.collection("balance").doc("balance").get()).data().money);
+    useEffect(async () => {
+        console.log("Consume Mount!!!");
+        setDay((prevState) => { return moment().format('D') });
+        setFbmonth((prevState) => { return checkmonth(moment().format('M')) });
+        setMonthday((prevState) => { return checkday(moment().format('M')) });
         setMonthuse(await (await dbService.collection(fbmonth).doc("Totaluse").get()).data().money);
+        setBalance(await (await dbService.collection("balance").doc("balance").get()).data().money);
     },[]);
 
     const checkmonth = (month) => {
@@ -41,7 +40,7 @@ function Consume () {
             case 10: return "October";
             case 11: return "November";
             case 12: return "December";
-        }
+        } 
     }
 
     const checkday = (month) => {
@@ -63,7 +62,7 @@ function Consume () {
 
     const onSubmit = async (event) => {
         event.preventDefault();
-        await dbService.collection(fbmonth).add({
+        await dbService.collection(fbmonth).doc(day).set({
             day: day,
             items: todayuselist,
             todayuse: todayuse,
