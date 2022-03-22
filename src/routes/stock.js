@@ -23,6 +23,15 @@ function Stock() {
         navigate(-1);
     }
 
+
+    const daysort = () => {
+        uselist.sort((a,b) => {
+            return Number(a.id)-Number(b.id);
+        });
+        console.log(uselist);
+        console.log("daysort!!!");
+    }
+
     const checkmonth = (month) => {
         switch(Number(month)) {
             case 1: return "January";
@@ -43,13 +52,18 @@ function Stock() {
     useEffect(async () => {
         console.log("Stock Mount !!!");
         setFbmonth((prevState) => { return checkmonth(moment().format('M')) });
-        console.log(fbmonth);
         const data = await dbService.collection(fbmonth).get();
         data.forEach((document) => {
             if(document.id !=="Totaluse") {
-                document.data()
+                const dayObject = {
+                    ...document.data(),
+                    id: document.id,
+                }
+                setUselist((prev) => [dayObject, ...prev]);
             }
         });
+        console.log(uselist);
+        daysort();
     },[]);
 
     return(
