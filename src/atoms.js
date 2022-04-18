@@ -5,7 +5,7 @@ export const username = atom({
     default: "Anonymous",
 });
 
-export const uselist = atom({
+export const uselistatom = atom({
     key: "uselist",
     default: [],
 });

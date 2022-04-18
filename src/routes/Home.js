@@ -1,30 +1,29 @@
+import "../css/Homecss.css";
 import React from "react";
 import { Link, useParams} from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { username } from "../atoms";
+import Todo from "../components/Todo";
 
 function Home () {
     const { userId } = useParams();
     const [ user, setUser] = useRecoilState(username);
 
     return (
-        <div>
-            <Link
-            to={{
-                pathname: `/${userId}/stock`
-            }}
-            >잔고</Link>
-            <Link
-            to={{
-                pathname: `/${userId}/date`
-            }}
-            >데이트</Link>
-            <Link
-            to={{
-                pathname: `/${userId}/photo`
-            }}
-            >포토</Link>
-            <h1>Home</h1>
+        <div class="Home">
+            <header className="Home_header">
+                <Link
+                to={{
+                    pathname: `/${userId}/stock`
+                }}> 
+                    <button>
+                        💵 
+                    </button>
+                </Link>
+            </header>
+            <main className="Home_Todo">
+                <Todo/>
+            </main>
         </div>
     );
 }

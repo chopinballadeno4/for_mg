@@ -1,0 +1,15 @@
+@import "https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css";
+
+* {
+    box-sizing: border-box;
+  }
+
+.Home {
+    background-color: pink;
+    width: 100vw;
+    height: 100vh;
+}
+
+.Home_header {
+    
+}

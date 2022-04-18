@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
 import Chart from "../components/Chart";
-import { username } from "../atoms";
+import { username, uselistatom } from "../atoms";
 import { useRecoilState, useRecoilValue } from "recoil";
 import Consume from "../components/Consume";
 import 'react-big-calendar/lib/css/react-big-calendar.css';
@@ -14,6 +14,7 @@ function Stock() {
     //const [ monthday, setMonthday ] = useState(0); // 그달이 몇일까지 있는지
     const [ fbmonth, setFbmonth ] = useState(""); // March, April 등..
     const [ uselist, setUselist ] = useState([]);
+    const [ listatom, setListatom ] = useRecoilState(uselistatom);
     const navigate = useNavigate();
     moment.locale('ko');
     const localizer = momentLocalizer(moment);
@@ -23,13 +24,10 @@ function Stock() {
         navigate(-1);
     }
 
-
     const daysort = () => {
         uselist.sort((a,b) => {
             return Number(a.id)-Number(b.id);
         });
-        console.log(uselist);
-        console.log("daysort!!!");
     }
 
     const checkmonth = (month) => {
@@ -52,6 +50,8 @@ function Stock() {
     useEffect(async () => {
         console.log("Stock Mount !!!");
         setFbmonth((prevState) => { return checkmonth(moment().format('M')) });
+        console.log(fbmonth);
+        if(listatom.size() === 0) {
         const data = await dbService.collection(fbmonth).get();
         data.forEach((document) => {
             if(document.id !=="Totaluse") {
@@ -62,8 +62,10 @@ function Stock() {
                 setUselist((prev) => [dayObject, ...prev]);
             }
         });
-        console.log(uselist);
         daysort();
+        setListatom((prev) => {});
+        
+        }
     },[]);
 
     return(
