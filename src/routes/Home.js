@@ -8,6 +8,7 @@ import Todo from "../components/Todo";
 function Home () {
     const { userId } = useParams();
     const [ user, setUser] = useRecoilState(username);
+    console.log("Home mount !");
 
     return (
         <div class="Home">
